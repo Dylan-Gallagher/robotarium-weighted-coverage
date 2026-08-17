@@ -14,5 +14,5 @@ keywords:
   - Voronoi partition
   - control barrier functions
 abstract: >-
-  A deterministic, simulator-only eight-robot density-weighted coverage pilot
+  A fixed-seed, simulator-only eight-robot density-weighted coverage pilot
   using the official Robotarium transform and barrier-certificate API.

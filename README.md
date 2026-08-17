@@ -4,7 +4,7 @@
 > Robotarium run, hardware validation, account submission, or peer-to-peer
 > communication claim is made anywhere in this repository.
 
-This repository contains a deterministic eight-robot coverage-control pilot.
+This repository contains a fixed-seed eight-robot coverage-control pilot.
 Each robot follows the density-weighted centroid of its discrete Voronoi cell;
 the official Robotarium single-integrator-to-unicycle transform and
 boundary-aware barrier certificate filter the resulting commands. A final
@@ -88,8 +88,65 @@ not an edge-to-edge body gap. The conservative boundary metric subtracts a
 
 The timing values above describe the machine that generated the frozen local
 run; they are not hardware latency measurements and are expected to vary on
-other computers. Barrier filtering changed the nominal command on 20.28% of
-control steps, and the common actuator scale activated on 1.42%.
+other computers. On that same frozen host, barrier filtering changed the
+nominal command on 20.28% of control steps, and the common actuator scale
+activated on 1.42%. Those two fractions count threshold crossings near
+equilibrium; they are environment-sensitive diagnostics, not cross-environment
+outcome gates.
+
+## Cross-environment reproduction audit
+
+The first GitHub-hosted full reproduction, [Actions run
+31993185231](https://github.com/Dylan-Gallagher/robotarium-weighted-coverage/actions/runs/31993185231),
+used the same controller, seed, pinned simulator commit, public direct-package
+pins, and 3,600 control steps. It reproduced the coverage reduction within
+`8.81e-12`, had a maximum sampled XY-coordinate difference of `2.361e-5 m`
+(23.61 micrometres) and an XY RMS difference of `1.863e-6 m`. Simulator
+validation remained available with zero errors or warnings.
+
+Its minimum offset collision-center spacing was `0.5021326 m`, compared with
+`0.5077624 m` on the frozen host: a `0.0056298 m` (1.109%) difference. The
+hosted value still exceeded the published 0.15 m recommendation by 0.3521 m.
+The 0.5078 m value in the table remains the exact frozen-host measurement; it
+is not relabelled as a byte-exact cross-environment result.
+
+The frozen PNG embeds Matplotlib 3.11.1, while the public pin and hosted run use
+3.10.8. The original frozen run did not record NumPy or CVXOPT versions, so the
+frozen environment is only partially known. The five committed frozen files
+pass their SHA-256 manifest; that integrity check does not claim a later run
+regenerated timing-bearing metrics, summary, log, or plot bytes.
+
+A fresh Fedora control under the exact public direct pins (NumPy 2.2.6,
+Matplotlib 3.10.8, CVXOPT 1.3.2) reproduced the frozen trajectory byte for byte
+and all gated summary fields exactly. The hosted Ubuntu run used the same
+public direct pins, and both install logs list the same Python package version
+strings. However, transitive packages are resolver-selected, wheel builds and
+system math libraries are not locked, and the operating system, BLAS runtime,
+and CPU environment differ. The audit therefore establishes bounded
+cross-environment variability, not a single isolated cause.
+
+The first hosted XY delta above `1e-12 m` occurred at 33.66 s, well after the
+3.63 s sustained-convergence marker. The pinned official barrier utility solves
+through CVXOPT with relative and feasibility tolerances of `1e-2`, and the
+larger trace differences are in angular/heading behavior near equilibrium.
+This pattern is consistent with environment-sensitive barrier-QP numerics, but
+it does not isolate CVXOPT, BLAS, package artifacts, the operating system, or
+another environment component as the sole cause. Threshold diagnostics changed
+more visibly (barrier intervention: 20.28% frozen versus 42.72% hosted;
+actuator scaling: 1.42% versus 3.61%) while XY motion, safety margin, and
+coverage were stable.
+
+The cross-environment comparison contract was introduced transparently after
+that first hosted run and corrected after the clean public-pin control
+established the evidence above. It retains exact controller configuration,
+simulator commit, evidence scope, validation availability, and zero-error
+requirements. It also enforces configured command limits, positive boundary
+clearance, at least 0.15 m collision-center spacing, no more than 0.01 m
+spacing drift from the frozen run, field-specific outcome tolerances, and
+trajectory limits of 50 micrometres per XY coordinate and 5 micrometres RMS.
+Tests demonstrate that unsafe spacing, simulator errors, changed guards,
+outcome regressions, actuator regressions, and meaningful trajectory drift all
+fail the comparison.
 
 ## Reproduce from a clean checkout
 
@@ -101,6 +158,7 @@ transitive packages retain the constraints selected by those distributions.
 python3.12 -m venv .venv
 .venv/bin/python -m pip install --upgrade pip
 .venv/bin/python -m pip install -e '.[test]'
+.venv/bin/python -m pip freeze --all
 .venv/bin/python scripts/verify_frozen_evidence.py
 .venv/bin/python -m pytest -q
 
@@ -115,10 +173,12 @@ ROBOTARIUM_HEADLESS=1 ROBOTARIUM_FAST=1 \
   results/reproduction/robotarium_coverage_trajectory.npy
 ```
 
-The comparison deliberately excludes wall-clock compute-time fields and plot
-bytes. It verifies the stable controller metrics and full sampled trajectory.
-The test suite also includes a short end-to-end simulator run. Continuous
-integration performs the same integrity, test, and full-reproduction checks.
+The comparison deliberately excludes wall-clock compute-time fields, plot
+bytes, and the two environment-sensitive threshold diagnostics. It reports
+those diagnostic deltas while enforcing the documented semantic outcome,
+safety, actuator, validation, and full sampled-trajectory gates above. The test
+suite also includes a short end-to-end simulator run. Continuous integration
+performs the same integrity, test, and full-reproduction checks.
 
 ## Evidence files
 
