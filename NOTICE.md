@@ -15,11 +15,16 @@ runtime dependencies.
 | [NumPy](https://github.com/numpy/numpy/blob/v2.2.6/LICENSE.txt) | 2.2.6 | BSD-3-Clause for the main project; distributions may carry additional notices | numerical arrays |
 | [Matplotlib](https://github.com/matplotlib/matplotlib/blob/v3.10.8/LICENSE/LICENSE) | 3.10.8 | Matplotlib License (PSF-compatible) | optional evidence plot |
 | [CVXOPT](https://github.com/cvxopt/cvxopt/blob/1.3.2/LICENSE) | 1.3.2 | GPL-3.0-or-later | quadratic program used by the Robotarium barrier certificate |
-| [pytest](https://github.com/pytest-dev/pytest/blob/9.0.2/LICENSE) | 9.0.2 | MIT | tests only |
+| [pytest](https://github.com/pytest-dev/pytest/blob/9.0.3/LICENSE) | 9.0.3 | MIT | tests only |
 
 The official simulator's pinned [`setup.py`](https://github.com/robotarium/robotarium_python_simulator/blob/307269846b2761528586e9c3f47d0a8bec21692f/setup.py)
 declares NumPy, Matplotlib, and CVXOPT and labels the simulator itself MIT.
 These primary files were checked on 2026-08-17.
+
+The test dependency is deliberately pinned to pytest 9.0.3, the first version
+patched for [GHSA-6w46-j5rx-g56g / CVE-2025-71176](https://github.com/advisories/GHSA-6w46-j5rx-g56g).
+Versions through 9.0.2 used vulnerable temporary-directory handling on UNIX;
+pytest 9.0.3 contains the upstream fix. Pytest is not a runtime dependency.
 
 The MIT license in this repository applies only to its original project files.
 Installing or redistributing a combined runtime does not replace any dependency
