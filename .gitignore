@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.venv/
+build/
+dist/
+*.egg-info/
+.coverage
+htmlcov/
+results/
+/robotarium_coverage_metrics.txt
+/robotarium_coverage_summary.png
+/robotarium_coverage_summary.txt
+/robotarium_coverage_trajectory.npy

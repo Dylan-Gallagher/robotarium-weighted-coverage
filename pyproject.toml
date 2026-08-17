@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools==80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "robotarium-weighted-coverage"
+version = "0.1.0"
+description = "Simulator-only density-weighted multi-robot coverage with Robotarium barrier certificates"
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+license = "MIT"
+authors = [
+  {name = "Dylan Gallagher"},
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+  "numpy==2.2.6",
+  "matplotlib==3.10.8",
+  "cvxopt==1.3.2",
+  "robotarium-python-simulator @ git+https://github.com/robotarium/robotarium_python_simulator.git@307269846b2761528586e9c3f47d0a8bec21692f",
+]
+
+[project.optional-dependencies]
+test = [
+  "pytest==9.0.2",
+]
+
+[project.scripts]
+robotarium-weighted-coverage = "experiment:main"
+
+[project.urls]
+Robotarium = "https://www.robotarium.gatech.edu/"
+"Pinned simulator" = "https://github.com/robotarium/robotarium_python_simulator/tree/307269846b2761528586e9c3f47d0a8bec21692f"
+
+[tool.setuptools]
+py-modules = ["experiment"]
+
+[tool.pytest.ini_options]
+addopts = "--strict-config --strict-markers"
+testpaths = ["tests"]

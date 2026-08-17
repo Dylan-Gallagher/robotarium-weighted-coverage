@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If this simulator-only pilot supports your work, please cite this repository."
+title: "Density-weighted multi-robot coverage for Robotarium"
+type: software
+authors:
+  - family-names: Gallagher
+    given-names: Dylan
+version: 0.1.0
+license: MIT
+keywords:
+  - multi-robot coverage
+  - Robotarium
+  - Lloyd algorithm
+  - Voronoi partition
+  - control barrier functions
+abstract: >-
+  A deterministic, simulator-only eight-robot density-weighted coverage pilot
+  using the official Robotarium transform and barrier-certificate API.

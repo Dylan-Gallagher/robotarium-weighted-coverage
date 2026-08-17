@@ -1,0 +1,83 @@
+Initializing 8 robots to initial conditions...
+At initial conditions... Starting Experiment
+Your simulation took approximately 185.30 real seconds to execute.
+
+No errors or warnings in your simulation!  Your script will run on the Robotarium!
+
+{
+  "artifact_files": {
+    "metrics_text_csv": "robotarium_coverage_metrics.txt",
+    "summary_json_text": "robotarium_coverage_summary.txt",
+    "summary_png": "robotarium_coverage_summary.png",
+    "trajectory_npy": "robotarium_coverage_trajectory.npy"
+  },
+  "barrier_intervention_step_fraction": 0.20277777777777778,
+  "config": {
+    "barrier_gain": 150.0,
+    "barrier_projection_distance_m": 0.03,
+    "barrier_safety_radius_m": 0.15,
+    "barrier_velocity_limit_mps": 0.14,
+    "control_gain": 0.85,
+    "grid_nx": 45,
+    "grid_ny": 27,
+    "iterations": 3600,
+    "log_stride": 10,
+    "maximum_commanded_angular_speed_radps": 3.5,
+    "maximum_wheel_speed_radps": 12.0,
+    "nominal_si_speed_limit_mps": 0.11,
+    "output_dir": "pilot/weighted_coverage/results/default",
+    "robots": 8,
+    "save_plot": true,
+    "seed": 20260817,
+    "show_figure": false,
+    "sim_in_real_time": false,
+    "skip_initialization": false,
+    "time_step_s": 0.033
+  },
+  "conservative_body_disk_radius_m": 0.055,
+  "control_compute_ms": {
+    "max": 4.831644000660162,
+    "mean": 2.329029933314612,
+    "p95": 2.636553500269656,
+    "p99": 2.990446400108339,
+    "published_control_period_ms": 33.0,
+    "steps_over_0_5s_watchdog": 0,
+    "steps_over_control_period": 0
+  },
+  "coverage_cost_reduction_fraction": 0.3795818808839646,
+  "evidence_scope": "local Robotarium simulator only; no physical hardware run claimed",
+  "experiment_phase_hard_error_count": 0,
+  "experiment_phase_validation_available": true,
+  "experiment_phase_validation_errors": {},
+  "final": {
+    "coverage_cost_m2": 0.08254252186392068,
+    "weighted_fraction_within_0_25m": 0.4462303180366216,
+    "weighted_fraction_within_0_35m": 0.7590961126540202,
+    "weighted_fraction_within_0_50m": 0.9863477722191063,
+    "weighted_rms_distance_m": 0.2873021438554204
+  },
+  "global_actuator_scaling_step_fraction": 0.014166666666666666,
+  "initial": {
+    "coverage_cost_m2": 0.13304337723328635,
+    "weighted_fraction_within_0_25m": 0.31723219617197945,
+    "weighted_fraction_within_0_35m": 0.5654475430190665,
+    "weighted_fraction_within_0_50m": 0.8433540143389435,
+    "weighted_rms_distance_m": 0.3647511168362427
+  },
+  "initialization_validation_available": true,
+  "initialization_validation_errors": {},
+  "maximum_nominal_si_speed_mps": 0.11000000000000003,
+  "maximum_safe_angular_speed_radps": 3.4908995712287867,
+  "maximum_safe_linear_speed_mps": 0.1097020014775205,
+  "minimum_conservative_body_boundary_clearance_m": 0.32017681349912,
+  "minimum_reference_point_boundary_clearance_m": 0.37517681349912,
+  "minimum_simulator_collision_center_pair_distance_m": 0.5077624366392909,
+  "nominal_control_duration_s": 118.80000000000001,
+  "official_simulator_commit": "307269846b2761528586e9c3f47d0a8bec21692f",
+  "published_recommended_spacing_m": 0.15,
+  "simulator_collision_center_offset_m": 0.025,
+  "simulator_hard_error_count": 0,
+  "simulator_validation_available": true,
+  "simulator_validation_errors": {},
+  "sustained_centroid_residual_max_below_0_05m_at_s": 3.6300000000000003
+}
